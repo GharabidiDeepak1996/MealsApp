@@ -1,22 +1,35 @@
 import React from "react";
 import {View,Text,Pressable,StyleSheet,Image,Platform} from 'react-native'
+import { useNavigation } from "@react-navigation/native";
+import MealDetails from "./MealDetails";
 
-export default function MealItem({title,imageUrl,duration,complexity,affordability}){
+export default function MealItem({id,title,imageUrl,affordability,complexity,duration}){
+    const navigation= useNavigation();
+
+
+    function selectMealItemHandler(){
+        navigation.navigate('MealDetail',{
+            mealId: id
+        })
+    }
+
     return(
         <View style={styles.mealItem}>
         <Pressable 
         android_ripple={{color:'#ccc'}}
         style={({pressed}) => [styles.button,pressed ? styles.buttonPressed : null]}
-        >
+        onPress={selectMealItemHandler}>
+
             <View style={styles.innerContainer}>
             <Image style={styles.imageView} source={{uri : imageUrl}}/>
             <Text style={styles.title}>{title}</Text>
             </View>
-            <View style={styles.details}>
+            <MealDetails duration={duration} complexity={complexity.toUpperCase()} affordability={affordability.toUpperCase()}/>
+            {/* <View style={styles.details}>
                 <Text style={styles.detailItem}>{duration}m</Text>
                 <Text style={styles.detailItem}>{complexity.toUpperCase()}</Text>
                 <Text style={styles.detailItem}>{affordability.toUpperCase()}</Text>
-            </View>
+            </View> */}
         </Pressable>
         </View>
     )
@@ -43,7 +56,7 @@ const styles = StyleSheet.create({
         height:200
     },
     title:{
-        fontFamily: 'bold',
+        //fontFamily: 'bold',
         textAlign:'center',
         fontSize:18,
         margin:8

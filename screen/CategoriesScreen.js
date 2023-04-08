@@ -9,7 +9,6 @@ export default function CategoriesScreen({navigation}){
         function pressHandler(){
             navigation.navigate('MealsOverView',
             {categoryId: itemData.item.id })
-            console.log("Button pressed")
         }
 
         return(
